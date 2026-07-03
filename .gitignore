@@ -1,0 +1,124 @@
+# =============================================================================
+# local-backup-and-recovery-framework - .gitignore
+# =============================================================================
+# Purpose:
+#   Prevent sensitive, environment-specific, and runtime-generated files from
+#   being committed to version control.
+#
+# Rule:
+#   If a file contains credentials, local paths, live system data, or is
+#   generated at runtime, it does not belong in this repository.
+# =============================================================================
+
+
+# -----------------------------------------------------------------------------
+# CONFIGURATION FILES (live copies)
+# -----------------------------------------------------------------------------
+# The config/ directory contains *.example.* files that ARE committed.
+# Live copies (renamed and populated by the operator) must never be committed.
+# They may contain local paths, usernames, or sensitive destination details.
+
+config/windows-backup.json
+config/linux-backup.conf
+
+
+# -----------------------------------------------------------------------------
+# SCRIPT LOG OUTPUT
+# -----------------------------------------------------------------------------
+# All scripts write logs to a local logs/ directory at runtime.
+# Logs may contain hostnames, file paths, and system state details.
+# Logs are operational artifacts, not source artifacts.
+
+logs/
+*.log
+
+
+# -----------------------------------------------------------------------------
+# BACKUP REPORT OUTPUT (live)
+# -----------------------------------------------------------------------------
+# The output/ directory contains committed sample reports for demonstration.
+# Live reports generated during actual operations must not be committed.
+# They may contain real hostnames, paths, file inventories, and timestamps.
+
+output/reports/
+output/live/
+
+
+# -----------------------------------------------------------------------------
+# CHECKSUM MANIFEST FILES (live)
+# -----------------------------------------------------------------------------
+# Manifest files are generated at backup time and stored alongside backups.
+# They are operational artifacts tied to specific backup sets.
+# Sample manifests, if needed, belong in output/ and are committed manually.
+
+*.manifest
+*.sha256
+
+
+# -----------------------------------------------------------------------------
+# WINDOWS-SPECIFIC
+# -----------------------------------------------------------------------------
+
+# PowerShell session state and transcripts
+*.pssc
+*.psd1.bak
+Thumbs.db
+desktop.ini
+
+# Windows temporary files
+*.tmp
+~$*
+
+
+# -----------------------------------------------------------------------------
+# LINUX-SPECIFIC
+# -----------------------------------------------------------------------------
+
+# Shell script editor artifacts
+*.swp
+*.swo
+*~
+
+# Compiled python (sometimes present in mixed environments)
+__pycache__/
+*.pyc
+
+
+# -----------------------------------------------------------------------------
+# EDITOR AND IDE ARTIFACTS
+# -----------------------------------------------------------------------------
+
+# Visual Studio Code
+.vscode/
+
+# JetBrains IDEs
+.idea/
+
+# Vim
+*.swp
+*.swo
+
+# macOS (if contributor uses a Mac)
+.DS_Store
+.AppleDouble
+.LSOverride
+
+
+# -----------------------------------------------------------------------------
+# CREDENTIALS AND SECRETS
+# -----------------------------------------------------------------------------
+# These patterns should never exist in this repository.
+# Listed explicitly as a documentation signal and accidental-commit guard.
+
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+id_rsa
+id_ed25519
+.env
+.env.*
+secrets.json
+credentials.json
