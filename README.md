@@ -159,6 +159,9 @@ prerequisites, configuration reference, and first-run verification steps.
 
 ## Repository Structure
 
+# Project Structure
+
+```text
 local-backup-and-recovery-framework/
 │
 ├── .gitignore                          # Suppresses live config, logs, secrets
@@ -178,7 +181,7 @@ local-backup-and-recovery-framework/
 │   ├── verify-backup.sh                # Verify backup completeness
 │   ├── restore.sh                      # Execute a guided restoration
 │   ├── enforce-retention.sh            # Enforce retention and purge old sets
-│   └── generate-report.sh             # Generate audit-ready report
+│   └── generate-report.sh              # Generate audit-ready report
 │
 ├── config/                             # Configuration templates
 │   ├── windows-backup.example.json     # Windows configuration reference
@@ -203,8 +206,9 @@ local-backup-and-recovery-framework/
 │   └── monthly-review-checklist.md     # Periodic operational review
 │
 └── output/                             # Sample script output
-├── sample-windows-backup-report.json
-└── sample-linux-backup-report.json
+    ├── sample-windows-backup-report.json
+    └── sample-linux-backup-report.json
+```
 
 ---
 
