@@ -1,0 +1,139 @@
+{
+  "_documentation": {
+    "description": "Example configuration file for the Local Backup and Recovery Framework (Windows).",
+    "usage": "Copy this file to config\\windows-backup.json, populate all required fields, and pass the path to each script using the -ConfigPath parameter.",
+    "warning": "The live config file (windows-backup.json) is excluded from version control by .gitignore. Never commit a populated configuration file. It may contain local paths and sensitive operational details.",
+    "reference": "See docs\\windows-setup-guide.md for full configuration guidance and docs\\command-reference.md for per-script parameter reference."
+  },
+
+  "backup": {
+    "_comment": "Core backup execution settings. All paths must be absolute. UNC paths are supported for destinations.",
+
+    "source_paths": [
+      "C:\\Users\\Administrator\\Documents",
+      "C:\\inetpub\\wwwroot",
+      "C:\\ProgramData\\MyApplication\\Config"
+    ],
+    "_source_paths_comment": "Array of absolute paths to back up. Each path is processed individually and logged separately. Minimum one entry required.",
+
+    "destination_root": "D:\\Backups",
+    "_destination_root_comment": "Absolute path to the root directory where backup sets are written. Must exist before running Invoke-Backup.ps1. UNC path example: \\\\BACKUPSERVER\\Backups",
+
+    "backup_set_prefix": "WINSRV01",
+    "_backup_set_prefix_comment": "Short identifier for this host. Used as a prefix in backup set directory names. Use hostname or a meaningful short label. No spaces. Example output: WINSRV01_2025-06-15_0200",
+
+    "use_vss": true,
+    "_use_vss_comment": "Enable Volume Shadow Copy Service (VSS) to back up files that are open or locked by running processes. Requires the script to run as Administrator. Set to false only if VSS is unavailable or explicitly not needed.",
+
+    "robocopy_options": {
+      "_comment": "Robocopy flag overrides. The script applies safe production defaults if this section is omitted. Only override when you understand the effect of each flag.",
+      "mirror": false,
+      "_mirror_comment": "If true, passes /MIR to robocopy. Mirror mode deletes files from the destination that no longer exist at the source. Use with caution — this is destructive. Default: false.",
+      "max_retries": 3,
+      "_max_retries_comment": "Number of retry attempts on a failed file copy. Maps to robocopy /R flag. Default: 3.",
+      "retry_wait_seconds": 5,
+      "_retry_wait_seconds_comment": "Seconds to wait between retry attempts. Maps to robocopy /W flag. Default: 5.",
+      "exclude_directories": [
+        "Temp",
+        "tmp",
+        "cache",
+        "Cache"
+      ],
+      "_exclude_directories_comment": "Directory names to exclude from all source paths. Maps to robocopy /XD. Names only, not full paths. Applied globally across all source paths.",
+      "exclude_files": [
+        "*.tmp",
+        "*.log",
+        "~*"
+      ],
+      "_exclude_files_comment": "File patterns to exclude from all source paths. Maps to robocopy /XF. Wildcards supported."
+    }
+  },
+
+  "integrity": {
+    "_comment": "Settings for Test-BackupIntegrity.ps1. Controls how verification is performed after a backup run.",
+
+    "verify_file_count": true,
+    "_verify_file_count_comment": "Compare total file count between source and destination. A mismatch indicates missing files. Recommended: true.",
+
+    "verify_size": true,
+    "_verify_size_comment": "Compare total byte size between source and destination. A mismatch may indicate truncated or partially written files. Recommended: true.",
+
+    "spot_check_enabled": true,
+    "_spot_check_enabled_comment": "Enable SHA256 hash spot-checking of a random sample of files. Confirms that file content was not corrupted during transfer. Recommended: true.",
+
+    "spot_check_sample_size": 10,
+    "_spot_check_sample_size_comment": "Number of files to include in the SHA256 spot-check sample. Larger values increase confidence but extend verification time. Recommended range: 5 to 25.",
+
+    "fail_on_size_delta_percent": 5,
+    "_fail_on_size_delta_percent_comment": "Maximum acceptable size difference between source and destination as a percentage. Verification fails if the delta exceeds this threshold. Accounts for VSS and filesystem overhead. Default: 5."
+  },
+
+  "retention": {
+    "_comment": "Settings for Set-RetentionPolicy.ps1. Controls how long backup sets are kept before automatic purge.",
+
+    "retain_days": 30,
+    "_retain_days_comment": "Backup sets older than this number of days are eligible for purge. Measured from the timestamp embedded in the backup set directory name. Default: 30. Minimum recommended: 7.",
+
+    "minimum_sets_to_keep": 3,
+    "_minimum_sets_to_keep_comment": "Regardless of age, always retain at least this many backup sets. Prevents the retention script from deleting all backups if the system is offline for an extended period. Default: 3.",
+
+    "dry_run_retention_by_default": true,
+    "_dry_run_retention_by_default_comment": "If true, Set-RetentionPolicy.ps1 runs in dry-run mode unless -Force is explicitly passed. Recommended: true. Prevents accidental deletion during initial deployment."
+  },
+
+  "logging": {
+    "_comment": "Controls where and how scripts write log output.",
+
+    "log_directory": "D:\\Backups\\Logs",
+    "_log_directory_comment": "Absolute path where log files are written. Must be writable by the account running the scripts. Recommended to keep logs on the same volume as backups for co-location, or a separate path for isolation.",
+
+    "log_level": "INFO",
+    "_log_level_comment": "Minimum log severity to write. Accepted values: DEBUG, INFO, WARN, ERROR. DEBUG produces verbose output useful during initial setup. INFO is recommended for production.",
+
+    "log_format": "JSON",
+    "_log_format_comment": "Output format for log entries. Accepted values: JSON, TEXT. JSON is required for New-BackupReport.ps1 to parse log data correctly. Do not change to TEXT unless you are not using the reporting script.",
+
+    "log_retention_days": 90,
+    "_log_retention_days_comment": "Log files older than this number of days are deleted automatically at the start of each backup run. Set to 0 to disable automatic log rotation. Default: 90."
+  },
+
+  "reporting": {
+    "_comment": "Settings for New-BackupReport.ps1.",
+
+    "report_output_directory": "D:\\Backups\\Reports",
+    "_report_output_directory_comment": "Absolute path where generated reports are written. Must be writable. Reports are named using the backup set name and a timestamp.",
+
+    "report_format": "Markdown",
+    "_report_format_comment": "Output format for generated reports. Accepted values: Markdown, JSON. Markdown produces a human-readable report suitable for tickets and records. JSON produces machine-readable output for integration with other tools.",
+
+    "include_file_list": false,
+    "_include_file_list_comment": "If true, the report includes a full list of backed-up files. Produces very large reports for large source paths. Recommended: false for routine reporting. Enable selectively for audit runs."
+  },
+
+  "notifications": {
+    "_comment": "Optional. Email notification settings for backup completion and failure events. Leave smtp_server blank to disable notifications entirely.",
+
+    "smtp_server": "",
+    "_smtp_server_comment": "SMTP relay hostname or IP address. Leave blank to disable email notifications. Example: mail.yourdomain.local",
+
+    "smtp_port": 25,
+    "_smtp_port_comment": "SMTP port. Common values: 25 (unauthenticated relay), 587 (STARTTLS), 465 (SSL). Default: 25.",
+
+    "smtp_use_ssl": false,
+    "_smtp_use_ssl_comment": "Enable SSL/TLS for SMTP connection. Set to true when using port 465 or an authenticated relay that requires encryption.",
+
+    "notification_from": "backup@yourdomain.local",
+    "_notification_from_comment": "From address for notification emails. Must be accepted by your SMTP relay.",
+
+    "notification_to": [
+      "sysadmin@yourdomain.local"
+    ],
+    "_notification_to_comment": "Array of recipient addresses for notification emails. Minimum one entry when notifications are enabled.",
+
+    "notify_on_success": false,
+    "_notify_on_success_comment": "Send a notification email on successful backup completion. Default: false. Enabling this for daily backups generates high notification volume. Recommended: false.",
+
+    "notify_on_failure": true,
+    "_notify_on_failure_comment": "Send a notification email when a backup run exits with errors. Default: true. Recommended: true."
+  }
+}
