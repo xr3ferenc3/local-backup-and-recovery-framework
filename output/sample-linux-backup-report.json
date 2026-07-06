@@ -1,0 +1,45 @@
+{
+  "report_generated_at": "2025-06-15T03:00:31",
+  "snapshot": "RHEL9-SRV01_2025-06-15_0200",
+  "host_label": "RHEL9-SRV01",
+  "backup_execution": {
+    "timestamp": "2025-06-15T02:38:44",
+    "level": "INFO",
+    "script": "backup",
+    "version": "1.0.0",
+    "message": "Backup run complete",
+    "status": "SUCCESS",
+    "snapshot": "RHEL9-SRV01_2025-06-15_0200",
+    "snapshot_path": "/mnt/backups/RHEL9-SRV01_2025-06-15_0200",
+    "sources_total": "3",
+    "sources_success": "3",
+    "sources_failed": "0",
+    "duration_seconds": "38",
+    "dry_run": "0",
+    "log_file": "/mnt/backups/logs/backup_2025-06-15_0200.json"
+  },
+  "integrity_verification": {
+    "summary": {
+      "status": "PASS",
+      "snapshot": "RHEL9-SRV01_2025-06-15_0200",
+      "snapshot_path": "/mnt/backups/RHEL9-SRV01_2025-06-15_0200",
+      "checks_performed": 3,
+      "checks_passed": 3,
+      "checks_failed": 0,
+      "duration_seconds": 9,
+      "log_file": "/mnt/backups/logs/verify-backup_2025-06-15_0230.json"
+    },
+    "checks": {
+      "file_count_pass": true,
+      "size_pass": true,
+      "spot_check_pass": true,
+      "spot_check_skipped": false
+    }
+  },
+  "retention_context": {
+    "total_snapshots_present": 6,
+    "retain_days": 30,
+    "minimum_snapshots_to_keep": 3
+  },
+  "is_partial_report": false
+}

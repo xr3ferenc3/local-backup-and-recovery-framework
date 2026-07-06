@@ -1,0 +1,159 @@
+{
+  "report_generated_at": "2025-06-15T03:00:47",
+  "backup_set": "WINSRV01_2025-06-15_0200",
+  "host_prefix": "WINSRV01",
+  "backup_execution": {
+    "timestamp": "2025-06-15T02:47:13",
+    "level": "INFO",
+    "script": "Invoke-Backup",
+    "version": "1.0.0",
+    "message": "Backup run complete",
+    "status": "SUCCESS",
+    "backup_set": "WINSRV01_2025-06-15_0200",
+    "backup_set_path": "D:\\Backups\\WINSRV01_2025-06-15_0200",
+    "sources_total": 3,
+    "sources_success": 3,
+    "sources_failed": 0,
+    "duration_seconds": 47.2,
+    "dry_run": false,
+    "log_file": "D:\\Backups\\Logs\\Invoke-Backup_2025-06-15_0200.json"
+  },
+  "integrity_verification": {
+    "summary": {
+      "status": "PASS",
+      "backup_set": "WINSRV01_2025-06-15_0200",
+      "backup_set_path": "D:\\Backups\\WINSRV01_2025-06-15_0200",
+      "checks_performed": 3,
+      "checks_passed": 3,
+      "checks_failed": 0,
+      "duration_seconds": 11.8,
+      "log_file": "D:\\Backups\\Logs\\Test-BackupIntegrity_2025-06-15_0230.json"
+    },
+    "checks": [
+      {
+        "check": "file_count",
+        "pass": true,
+        "details": [
+          {
+            "source": "C:\\Users\\Administrator\\Documents",
+            "source_count": 284,
+            "dest_count": 284,
+            "pass": true
+          },
+          {
+            "source": "C:\\inetpub\\wwwroot",
+            "source_count": 512,
+            "dest_count": 512,
+            "pass": true
+          },
+          {
+            "source": "C:\\ProgramData\\MyApplication\\Config",
+            "source_count": 17,
+            "dest_count": 17,
+            "pass": true
+          }
+        ]
+      },
+      {
+        "check": "total_size",
+        "pass": true,
+        "details": [
+          {
+            "source": "C:\\Users\\Administrator\\Documents",
+            "source_bytes": 1452033024,
+            "dest_bytes": 1452033024,
+            "delta_percent": 0.0,
+            "pass": true
+          },
+          {
+            "source": "C:\\inetpub\\wwwroot",
+            "source_bytes": 883326976,
+            "dest_bytes": 883326976,
+            "delta_percent": 0.0,
+            "pass": true
+          },
+          {
+            "source": "C:\\ProgramData\\MyApplication\\Config",
+            "source_bytes": 24576,
+            "dest_bytes": 24576,
+            "delta_percent": 0.0,
+            "pass": true
+          }
+        ]
+      },
+      {
+        "check": "spot_check_hash",
+        "pass": true,
+        "sample_size": 10,
+        "details": [
+          {
+            "file": "C__Users_Administrator_Documents\\Q2-Financial-Summary.xlsx",
+            "expected_hash": "a3f8c2e1d94b7056f3a2c8e4d1b6a9f2c7e3d8b4a1f6c9e2d5b8a3f7c4e1d9b6",
+            "actual_hash": "a3f8c2e1d94b7056f3a2c8e4d1b6a9f2c7e3d8b4a1f6c9e2d5b8a3f7c4e1d9b6",
+            "pass": true
+          },
+          {
+            "file": "C__inetpub_wwwroot\\index.html",
+            "expected_hash": "b7e4d1a8f3c6e9d2b5a8f1c4e7d0b3a6f9c2e5d8b1a4f7c0e3d6b9a2f5c8e1d4",
+            "actual_hash": "b7e4d1a8f3c6e9d2b5a8f1c4e7d0b3a6f9c2e5d8b1a4f7c0e3d6b9a2f5c8e1d4",
+            "pass": true
+          },
+          {
+            "file": "C__inetpub_wwwroot\\css\\main.css",
+            "expected_hash": "c9d2b5e8a1f4c7e0d3b6a9f2c5e8d1b4a7f0c3e6d9b2a5f8c1e4d7b0a3f6c9e2",
+            "actual_hash": "c9d2b5e8a1f4c7e0d3b6a9f2c5e8d1b4a7f0c3e6d9b2a5f8c1e4d7b0a3f6c9e2",
+            "pass": true
+          },
+          {
+            "file": "C__inetpub_wwwroot\\api\\config.json",
+            "expected_hash": "d1b4e7a0f3c6d9b2e5a8f1c4d7b0e3a6f9c2d5b8e1a4f7c0d3b6e9a2f5c8d1b4",
+            "actual_hash": "d1b4e7a0f3c6d9b2e5a8f1c4d7b0e3a6f9c2d5b8e1a4f7c0d3b6e9a2f5c8d1b4",
+            "pass": true
+          },
+          {
+            "file": "C__ProgramData_MyApplication_Config\\app.config",
+            "expected_hash": "e3a6f9c2d5b8e1a4f7c0d3b6e9a2f5c8d1b4e7a0f3c6d9b2e5a8f1c4d7b0e3a6",
+            "actual_hash": "e3a6f9c2d5b8e1a4f7c0d3b6e9a2f5c8d1b4e7a0f3c6d9b2e5a8f1c4d7b0e3a6",
+            "pass": true
+          },
+          {
+            "file": "C__Users_Administrator_Documents\\Projects\\deployment-notes.txt",
+            "expected_hash": "f5c8d1b4e7a0f3c6d9b2e5a8f1c4d7b0e3a6f9c2d5b8e1a4f7c0d3b6e9a2f5c8",
+            "actual_hash": "f5c8d1b4e7a0f3c6d9b2e5a8f1c4d7b0e3a6f9c2d5b8e1a4f7c0d3b6e9a2f5c8",
+            "pass": true
+          },
+          {
+            "file": "C__inetpub_wwwroot\\images\\logo.png",
+            "expected_hash": "a2f5c8d1b4e7a0f3c6d9b2e5a8f1c4d7b0e3a6f9c2d5b8e1a4f7c0d3b6e9a2f5",
+            "actual_hash": "a2f5c8d1b4e7a0f3c6d9b2e5a8f1c4d7b0e3a6f9c2d5b8e1a4f7c0d3b6e9a2f5",
+            "pass": true
+          },
+          {
+            "file": "C__ProgramData_MyApplication_Config\\logging.config",
+            "expected_hash": "b4e7a0f3c6d9b2e5a8f1c4d7b0e3a6f9c2d5b8e1a4f7c0d3b6e9a2f5c8d1b4e7",
+            "actual_hash": "b4e7a0f3c6d9b2e5a8f1c4d7b0e3a6f9c2d5b8e1a4f7c0d3b6e9a2f5c8d1b4e7",
+            "pass": true
+          },
+          {
+            "file": "C__inetpub_wwwroot\\js\\app.js",
+            "expected_hash": "c6d9b2e5a8f1c4d7b0e3a6f9c2d5b8e1a4f7c0d3b6e9a2f5c8d1b4e7a0f3c6d9",
+            "actual_hash": "c6d9b2e5a8f1c4d7b0e3a6f9c2d5b8e1a4f7c0d3b6e9a2f5c8d1b4e7a0f3c6d9",
+            "pass": true
+          },
+          {
+            "file": "C__Users_Administrator_Documents\\Archive\\2024-Annual-Report.pdf",
+            "expected_hash": "d8b1e4a7f0c3d6b9e2a5f8c1d4b7e0a3f6c9d2b5e8a1f4c7d0b3e6a9f2c5d8b1",
+            "actual_hash": "d8b1e4a7f0c3d6b9e2a5f8c1d4b7e0a3f6c9d2b5e8a1f4c7d0b3e6a9f2c5d8b1",
+            "pass": true
+          }
+        ]
+      }
+    ]
+  },
+  "retention_context": {
+    "total_sets_present": 8,
+    "retain_days": 30,
+    "minimum_sets_to_keep": 3
+  },
+  "is_partial_report": false
+}
